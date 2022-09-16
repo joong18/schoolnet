@@ -1,0 +1,132 @@
+<script>
+  
+  import { onMount } from 'svelte';
+  import { ports, isAlive } from '../stores';
+  import { paintPortColor, paintDeviceDownColor } from '../service/deviceutils.js';
+
+  export let deviceId;
+  export let size = {width: "800", height: "100"};
+  export let position = {x: "0", y:"0"}
+  
+  let root = null;
+  let portStore ;
+  let afterMount = false;
+
+  async function showPortStatus() {
+
+    if(!root) return;
+
+    if(!ports.hasPortStatusStore(deviceId)) {
+      await ports.fetchPortStatus(deviceId);
+    }
+
+    portStore = ports.getPortStatusStore(deviceId);
+    
+    if($portStore[1] === undefined) return;
+
+    if($isAlive.get(deviceId)) {
+      paintPortColor($portStore[1], root);
+    } else {
+      paintDeviceDownColor(root);
+    }
+
+  }
+
+  onMount(() => {
+    showPortStatus();
+    afterMount = true;
+  });
+
+  $: if(afterMount && deviceId) {
+    showPortStatus();
+  }
+
+  $: {
+    $isAlive.get(deviceId);
+    showPortStatus();
+  }
+</script>
+
+<svg xmlns="http://www.w3.org/2000/svg" x={position.x} y={position.y} width={size.width} height={size.height} viewBox="0 0 229.5 29.5" bind:this={root} id={'d' + deviceId}>
+  <rect style="opacity:1;fill:#333b4f;fill-opacity:1;stroke:#09160a;stroke-width:.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:.69346732;paint-order:normal" width="228.5" height="28.5" x=".6" y=".5" ry="1" rx="1.2"/>
+  <path class="port port-22" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" d="M188.6 16v4.7h3.5v-.6h.4v.6h3.5V16h-3.5v.5h-.4V16Z"/>
+  <path class="port port-26" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" d="M206.8 16v4.7h3.5v-.6h.4v.6h3.5V16h-3.5v.5h-.4V16Z"/>
+  <path class="port port-24" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" d="M196.3 16v4.7h3.5v-.6h.4v.6h3.5V16h-3.5v.5h-.4V16Z"/>
+  <path class="port port-28" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" d="M214.7 16v4.7h3.4v-.6h.4v.6h3.5V16h-3.5v.5h-.4V16Z"/>
+  <path d="M94 9.1v1h-1.7v4.3h7V10h-1.7V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-01"/>
+  <path d="M97.6 21.3v-.9h1.7V16h-7v4.4h1.8v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-02"/>
+  <path d="M101.6 9.1v1h-1.7v4.3h7V10h-1.7V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-03"/>
+  <path d="M105.3 21.3v-.9h1.7V16h-7v4.4h1.7v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-04"/>
+  <path d="M109.3 9.1v1h-1.8v4.3h7V10h-1.8V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-05"/>
+  <path d="M112.9 21.3v-.9h1.7V16h-7v4.4h1.7v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-06"/>
+  <path d="M116.9 9.1v1h-1.7v4.3h7V10h-1.7V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-07"/>
+  <path d="M120.5 21.3v-.9h1.7V16h-7v4.4h1.8v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-08"/>
+  <path d="M124.5 9.1v1h-1.6v4.3h7V10h-1.8V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-09"/>
+  <path d="M128.2 21.3v-.9h1.7V16h-7v4.4h1.7v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-10"/>
+  <path d="M132.2 9.1v1h-1.7v4.3h7V10h-1.7V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-11"/>
+  <path d="M135.8 21.3v-.9h1.7V16h-7v4.4h1.8v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-12"/>
+  <path d="M142.1 9.1v1h-1.7v4.3h7V10h-1.7V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-13"/>
+  <path d="M145.7 21.3v-.9h1.7V16h-7v4.4h1.8v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-14"/>
+  <path d="M149.7 9.1v1H148v4.3h7V10h-1.7V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-15"/>
+  <path d="M153.3 21.3v-.9h1.8V16h-7v4.4h1.7v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-16"/>
+  <path d="M157.4 9.1v1h-1.7v4.3h7V10h-1.8V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-17"/>
+  <path d="M161 21.3v-.9h1.7V16h-7v4.4h1.7v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-18"/>
+  <path d="M165 9.1v1h-1.7v4.3h7V10h-1.7V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-19"/>
+  <path d="M168.6 21.3v-.9h1.7V16h-7v4.4h1.8v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-20"/>
+  <path d="M172.7 9.1v1H171v4.3h7V10h-1.8V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-21"/>
+  <path d="M176.3 21.3v-.9h1.7V16h-7v4.4h1.7v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-22"/>
+  <path d="M180.3 9.1v1h-1.7v4.3h7V10h-1.7V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-23"/>
+  <path d="M183.9 21.3v-.9h1.7V16h-7v4.4h1.8v1z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-24"/>
+  <path d="M188.6 10v4.6h3.5v-.5h.4v.5h3.5V10h-3.5v.5h-.4V10Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-21"/>
+  <path d="M206.8 10v4.6h3.5v-.5h.4v.5h3.5V10h-3.5v.5h-.4V10Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-25"/>
+  <path d="M196.3 10v4.6h3.5v-.5h.4v.5h3.5V10h-3.5v.5h-.4V10Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-23"/>
+  <path d="M214.7 10v4.6h3.4v-.5h.4v.5h3.5V10h-3.5v.5h-.4V10Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001" class="port port-27"/>
+  <path d="M84.1 9.1v.9h-1.6v4.4h7V10h-1.7V9Z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001"/>
+  <path d="M87.7 21.3v-1h1.8V16h-7v4.4h1.8v.9z" style="fill:#fdfdf1;stroke:#000;stroke-width:.40000001"/>
+  <rect transform="rotate(-90)" ry=".2" rx="0" y="76.5" x="-21.6" height="2.3" width="8.3" style="opacity:1;fill:#e6e6e6;fill-opacity:.98969074;stroke:#090a0e;stroke-width:.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"/>
+  <rect transform="rotate(-90)" ry=".1" rx="0" y="77.3" x="-20.2" height=".7" width="5.4" style="fill:#00f;stroke-width:.1;stroke-miterlimit:6.5999999;stroke-dasharray:none;paint-order:stroke fill markers"/>
+  <circle style="opacity:1;fill:#f1f413;fill-opacity:1;stroke:#090a0e;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" cx="74.2" cy="19.8" r=".8"/>
+  <text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-size:2.11666656px;line-height:16.25;font-family:'Headline R';-inkscape-font-specification:'Headline R Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#2c4cc8;fill-opacity:1;stroke:#2c4cc8;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" x="62.6" y="20.6"><tspan x="62.6" y="20.6" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-family:'고딕체';-inkscape-font-specification:'고딕체 Bold';text-align:start;text-anchor:start;fill:#fff;fill-opacity:1;stroke:#090a0e;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-opacity:1">POWER</tspan></text>
+  <circle style="opacity:1;fill:#98b49b;fill-opacity:1;stroke:#090a0e;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" cx="74.2" cy="16.9" r=".8"/>
+  <text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-size:2.11666656px;line-height:16.25;font-family:'Headline R';-inkscape-font-specification:'Headline R Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#2c4cc8;fill-opacity:1;stroke:#2c4cc8;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" x="62.8" y="17.7"><tspan x="62.8" y="17.7" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-family:'고딕체';-inkscape-font-specification:'고딕체 Bold';text-align:start;text-anchor:start;fill:#fff;fill-opacity:1;stroke:#090a0e;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-opacity:1">ALARM</tspan></text>
+  <circle style="opacity:1;fill:#06f620;fill-opacity:1;stroke:#090a0e;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" cx="74.2" cy="14.2" r=".8"/>
+  <text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-size:2.11666656px;line-height:16.25;font-family:'Headline R';-inkscape-font-specification:'Headline R Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#2c4cc8;fill-opacity:1;stroke:#2c4cc8;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" x="62.7" y="14.9"><tspan x="62.7" y="14.9" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-family:'고딕체';-inkscape-font-specification:'고딕체 Bold';text-align:start;text-anchor:start;fill:#fff;fill-opacity:1;stroke:#090a0e;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-opacity:1">STATUS</tspan></text>
+  <rect style="opacity:1;fill:#807d7d;fill-opacity:1;stroke:#5f6169;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" width="21.5" height="4.3" x="5.4" y="7.2" rx="1.4" ry="1.3"/>
+  <text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-size:3.52777767px;line-height:16.25;font-family:'Headline R';-inkscape-font-specification:'Headline R Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#fff;fill-opacity:1;stroke:#2c4cc8;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" x="7.7" y="10.6"><tspan x="7.7" y="10.6" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-family:'고딕체';-inkscape-font-specification:'고딕체 Bold';text-align:start;text-anchor:start;fill:#fff;fill-opacity:1;stroke:#090a0e;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-opacity:1">TiFRONT</tspan></text>
+  <text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-size:2.82222223px;line-height:16.25;font-family:'Headline R';-inkscape-font-specification:'Headline R Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#fff;fill-opacity:1;stroke:#2c4cc8;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" x="5.4" y="6.1"><tspan x="5.4" y="6.1" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-family:'고딕체';-inkscape-font-specification:'고딕체 Bold';text-align:start;text-anchor:start;fill:#fff;fill-opacity:1;stroke:#090a0e;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-opacity:1">PIOLINK</tspan></text>
+  <text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-size:1.41111112px;line-height:16.25;font-family:'Headline R';-inkscape-font-specification:'Headline R Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#fff;fill-opacity:1;stroke:#2c4cc8;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" x="20" y="6.2"><tspan x="20" y="6.2" style="font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-family:'고딕체';-inkscape-font-specification:'고딕체 Bold';text-align:start;text-anchor:start;fill:#fff;fill-opacity:1;stroke:#090a0e;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-opacity:1">CS Series</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="98.5" y="6.9" transform="scale(.9627 1.03874)"><tspan x="98.5" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">1</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="106.5" y="6.9" transform="scale(.9627 1.03874)"><tspan x="106.5" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">3</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="114.4" y="6.9" transform="scale(.9627 1.03874)"><tspan x="114.4" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">5</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="122.4" y="6.9" transform="scale(.9627 1.03874)"><tspan x="122.4" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">7</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="130.4" y="6.9" transform="scale(.9627 1.03874)"><tspan x="130.4" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">9</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="137.3" y="6.9" transform="scale(.9627 1.03874)"><tspan x="137.3" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">11</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="147.5" y="6.9" transform="scale(.9627 1.03874)"><tspan x="147.5" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">13</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="155.5" y="6.9" transform="scale(.9627 1.03874)"><tspan x="155.5" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">15</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="163.4" y="6.9" transform="scale(.9627 1.03874)"><tspan x="163.4" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">17</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="171.3" y="6.9" transform="scale(.9627 1.03874)"><tspan x="171.3" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">19</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="179.4" y="6.9" transform="scale(.9627 1.03874)"><tspan x="179.4" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">21</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="187.3" y="6.9" transform="scale(.9627 1.03874)"><tspan x="187.3" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">23</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="197.9" y="6.9" transform="scale(.9627 1.03874)"><tspan x="197.9" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">21</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="205.8" y="6.9" transform="scale(.9627 1.03874)"><tspan x="205.8" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">23</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="98.5" y="24.1" transform="scale(.9627 1.03874)"><tspan x="98.5" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">2</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="106.5" y="24.1" transform="scale(.9627 1.03874)"><tspan x="106.5" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">4</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="114.4" y="24.1" transform="scale(.9627 1.03874)"><tspan x="114.4" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">6</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="122.4" y="24.1" transform="scale(.9627 1.03874)"><tspan x="122.4" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">8</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="129.3" y="24.1" transform="scale(.9627 1.03874)"><tspan x="129.3" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">10</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="137.2" y="24.1" transform="scale(.9627 1.03874)"><tspan x="137.2" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">12</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="147.5" y="24.1" transform="scale(.9627 1.03874)"><tspan x="147.5" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">14</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="155.4" y="24.1" transform="scale(.9627 1.03874)"><tspan x="155.4" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">16</tspan></text>
+  <text xml:space="preserve" x="152" y="25.8" transform="scale(1.03405 .96707)"><tspan x="152" y="25.8" style="font-weight:700;font-size:2.6400001px;fill:#fff;stroke-width:.07">18</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="171.4" y="24.1" transform="scale(.9627 1.03874)"><tspan x="171.4" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">20</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="179.3" y="24.1" transform="scale(.9627 1.03874)"><tspan x="179.3" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">22</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="187.2" y="24.1" transform="scale(.9627 1.03874)"><tspan x="187.2" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">24</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="197.8" y="24.1" transform="scale(.9627 1.03874)"><tspan x="197.8" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">22</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="205.8" y="24.1" transform="scale(.9627 1.03874)"><tspan x="205.8" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">24</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="216.7" y="6.9" transform="scale(.9627 1.03874)"><tspan x="216.7" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">25</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="224.9" y="6.9" transform="scale(.9627 1.03874)"><tspan x="224.9" y="6.9" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">27</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="216.7" y="24.1" transform="scale(.9627 1.03874)"><tspan x="216.7" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">26</tspan></text>
+  <text style="font-size:11.99997044px;stroke-width:.9999975" xml:space="preserve" x="224.9" y="24.1" transform="scale(.9627 1.03874)"><tspan x="224.9" y="24.1" style="font-weight:700;font-size:2.63999343px;fill:#fff;stroke-width:.05999985">28</tspan></text>
+  <rect style="display:inline;opacity:1;fill:#fd5;fill-opacity:.98969074;stroke:#090a0e;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:6.5999999;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" width="41" height="7.7" x="30.1" y="3.9" rx=".1" ry=".7"/>
+  <text xml:space="preserve" style="font-style:normal;font-weight:400;font-size:7.48945618px;line-height:1.25;font-family:sans-serif;letter-spacing:0;word-spacing:0;display:inline;fill:#000;fill-opacity:1;stroke:none;stroke-width:.26458266" x="32" y="9.7" transform="scale(.98845 1.01168)"><tspan x="32" y="9.7" style="font-size:5.64443064px;stroke-width:.26458266">4단계_보안 L2</tspan></text>
+</svg>
