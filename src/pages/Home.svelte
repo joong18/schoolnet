@@ -6,8 +6,14 @@
     $: completeIsAlive = $isAlive.size > 0 ? true : false;
 
     let size = {width:400, height:50};
-    let date = new Date();
-    let today = date.getMonth()+'월 '+date.getDate()+'일'    
+    let today = new Date().getMonth()+1 + '월 ' + new Date().getDate() + '일';   
+    $: nowTime = new Date().getHours() + ':' + new Date().getMinutes();
+    function getNowTime(){         
+        nowTime = new Date().getHours() + ':' + new Date().getMinutes();
+    }
+    setInterval(getNowTime, 1000);
+    console.log(nowTime);    
+    
 </script>
 
 
@@ -28,10 +34,28 @@
     </div>
     <div class="p-4 bg-white rounded row-span-2 ...">
         <div class="pb-4 px-4 font-bold text-gray-500"><span>금일 트래픽 현황</span><span class="px-4 text-lg">{today}</span></div>
-        <div class="py-1 px-4 text-gray-700"><span class="text-lg">유선</span><span class="px-4 text-2xl">150</span></div>
-        <div class="py-1 px-4 text-gray-700"><span class="text-lg">무선</span><span class="px-4 text-2xl">200</span></div>
+        <div class="py-4 px-4 text-gray-700"><span class="text-lg">현재</span><span class="px-4 text-xl">{nowTime}</span>
+            <div class="py-1 px-14 text-gray-700 text-2xl">200Mbps</div>
+        </div>
+        <div class="py-4 px-4 text-gray-700"><span class="text-lg">최대</span><span class="px-4 text-xl">10:10</span>
+            <div class="py-1 px-14 text-gray-700 text-2xl">300Mbps</div>
+        </div>        
     </div>
-    
+    <div class="p-4 bg-white rounded row-span-1 col-span-2 ...">
+        <div class="pb-4 px-4 font-bold text-gray-500">도메인 현황</div>
+        <div class="py-1 px-4 text-gray-700  text-2xl">namcheon.es.kr</div>
+        <div class="py-1 px-4 text-gray-700"><span class="text-lg">만료일</span><span class="px-1 text-2xl">2022년 9월 20일</span><span class="px-1 text-xl">(5일 남았음)</span></div>
+    </div>
+    <div class="p-4 bg-white rounded row-span-1 ...">
+        <div class="pb-4 px-4 font-bold text-gray-500">문의처</div>
+        <div class="py-1 px-4 text-gray-700"><span class="text-lg">학교망</span><span class="px-4 text-2xl">051-860-6253</span></div>
+        <div class="py-1 px-4 text-gray-700"><span class="text-lg">학교 홈페이지</span><span class="px-4 text-2xl">070-4018-1054~6</span></div>
+    </div>
+    <div class="p-4 bg-white rounded row-span-1 col-span-2 ...">
+        <div class="pb-4 px-4 font-bold text-gray-500">할당 IP 현황</div>
+        <div class="py-1 px-4 text-gray-700"><span class="text-lg">유선대역</span><span class="px-4 text-2xl">10.100.1.0 ~ 10.100.32.255</span></div>
+        <div class="py-1 px-4 text-gray-700"><span class="text-lg">무선대역</span><span class="px-4 text-2xl">10.200.1.0 ~ 10.200.32.255</span></div>
+    </div>
     <!--<table class="table-auto w-full p-3 border-collapse border border-slate-400">
         <tr class="border border-slate-300 text-center h-8">
             <td class="border border-slate-300  bg-green-100">학교(기관)명</td>
@@ -49,37 +73,6 @@
             <td class="border border-slate-300  bg-green-100">홈페이지 주소</td>
             <td class="border border-slate-300">{$organ.homepage}</td>
         </tr>
-    </table>-->
-{/if}
-<br />
-
-{#if isDevicesEmpty}
-    <h1>아직 어떤 장비 정보도 불러오지 않았습니다.</h1>
-{:else}
-    <div class="row-span-3 ...">학교(기관)명: {$organ.name}</div>
-    <!--<table class="table-auto w-full p-3 border-collapse border border-slate-400">
-        <thead>
-            <tr class="border border-slate-300 text-center h-8 bg-indigo-200 font-bold">
-                <td class="border border-slate-300 w-20">번호</td>
-                <td class="border border-slate-300">장비명</td>
-                <td class="border border-slate-300">별칭</td>
-                <td class="border border-slate-300">IP</td>
-                <td class="border border-slate-300">MAC</td>
-                <td class="border border-slate-300">사업명</td>
-            </tr>
-        </thead>
-        {#each $devices as {id, name, nick, ip, mac, project }}
-        <tbody>
-            <tr class="border border-slate-300 text-center h-8 bg-indigo-50">
-                <td class="border border-slate-300 w-20">{id}</td>
-                <td class="border border-slate-300">{name}</td>
-                <td class="border border-slate-300">{nick}</td>
-                <td class="border border-slate-300">{ip}</td>
-                <td class="border border-slate-300">{mac}</td>
-                <td class="border border-slate-300">{project}</td>
-            </tr>
-        </tbody>
-        {/each}
     </table>-->
 {/if}
 </div>
