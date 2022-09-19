@@ -7,12 +7,12 @@
 
     let size = {width:400, height:50};
     let today = new Date().getMonth()+1 + '월 ' + new Date().getDate() + '일';   
-    $: nowTime = new Date().getHours() + ':' + new Date().getMinutes();
+    
+    $: nowTime = new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2,"0");
     function getNowTime(){         
-        nowTime = new Date().getHours() + ':' + new Date().getMinutes();
+        nowTime = new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2,"0");
     }
-    setInterval(getNowTime, 1000);
-    console.log(nowTime);    
+    setInterval(getNowTime, 10000);
     
 </script>
 
