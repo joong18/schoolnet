@@ -9,6 +9,7 @@
     let today = new Date().getMonth()+1 + '월 ' + new Date().getDate() + '일';   
     
     //remark test 2022.10.4.
+    //master test 2022.10.4
     $: nowTime = new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2,"0");
     function getNowTime(){         
         nowTime = new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2,"0");
