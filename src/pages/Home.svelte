@@ -8,6 +8,7 @@
     let size = {width:400, height:50};
     let today = new Date().getMonth()+1 + '월 ' + new Date().getDate() + '일';   
     
+    //remark test 2022.10.4.
     $: nowTime = new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2,"0");
     function getNowTime(){         
         nowTime = new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2,"0");
@@ -56,23 +57,6 @@
         <div class="py-1 px-4 text-gray-700"><span class="text-lg">유선대역</span><span class="px-4 text-2xl">10.100.1.0 ~ 10.100.32.255</span></div>
         <div class="py-1 px-4 text-gray-700"><span class="text-lg">무선대역</span><span class="px-4 text-2xl">10.200.1.0 ~ 10.200.32.255</span></div>
     </div>
-    <!--<table class="table-auto w-full p-3 border-collapse border border-slate-400">
-        <tr class="border border-slate-300 text-center h-8">
-            <td class="border border-slate-300  bg-green-100">학교(기관)명</td>
-            <td class="border border-slate-300">{$organ.name}</td>
-        </tr>
-        <tr class="border border-slate-300 text-center h-8 ">
-            <td class="border border-slate-300  bg-green-100">설립</td>
-            <td class="border border-slate-300">{$organ.buildbase}</td>
-        </tr>
-        <tr class="border border-slate-300 text-center h-8 ">
-            <td class="border border-slate-300  bg-green-100">관할교육청</td>
-            <td class="border border-slate-300">{$organ.ctrlorg}</td>
-        </tr>
-        <tr class="border border-slate-300 text-center h-8 ">
-            <td class="border border-slate-300  bg-green-100">홈페이지 주소</td>
-            <td class="border border-slate-300">{$organ.homepage}</td>
-        </tr>
-    </table>-->
+   
 {/if}
 </div>

@@ -72,6 +72,10 @@
     return width / ratio
   }
 
+  /**
+   * 
+   * @param organId
+   */
   async function getLinks(organId) {
     await links.fetchLinks(organId);
   }
